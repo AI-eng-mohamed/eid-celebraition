@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تهنئة العيد الاحترافية التفاعلية بالكامل</title>
+    <title>تهنئة العيد التفاعلية بالألوان</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #d4af37;
-            --bg-gradient: linear-gradient(135deg, #0a0f1d, #070708);
+            --bg-gradient: linear-gradient(135deg, #111111, #2c3e50);
         }
 
         body, html {
@@ -23,6 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: background 0.8s ease;
         }
 
         canvas {
@@ -35,11 +36,11 @@
             pointer-events: none;
         }
 
+        /* التروس لثيم الوالد */
         .gear {
             position: absolute;
             font-size: 140px;
-            color: rgba(212, 175, 55, 0.04);
-            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.1));
+            color: rgba(255, 255, 255, 0.05);
             display: none;
             z-index: 0;
         }
@@ -49,24 +50,23 @@
         .card-container {
             width: 90%;
             max-width: 440px;
-            background: rgba(15, 22, 36, 0.45);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 24px;
             padding: 35px 25px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
             z-index: 2;
             animation: fadeIn 1s ease-out;
-            position: relative;
         }
 
         .icon-box {
             font-size: 70px;
             margin-bottom: 10px;
-            filter: drop-shadow(0 0 20px var(--primary-color));
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.5));
             animation: float 3s ease-in-out infinite;
         }
 
@@ -75,48 +75,40 @@
             color: var(--primary-color);
             font-size: 2.4rem;
             margin: 15px 0 5px 0;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            text-shadow: 0 0 15px rgba(255,255,255,0.2);
         }
 
         .message-text {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             line-height: 1.8;
-            color: #e2e8f0;
+            color: #ffffff;
+            font-weight: bold;
             margin: 20px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .highlight-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 20px;
             border-radius: 16px;
             font-weight: bold;
-            font-size: 1.1rem;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            margin-bottom: 20px;
-        }
-        
-        .highlight-box::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 10%; height: 80%; width: 4px;
-            background: var(--primary-color);
-            border-radius: 2px;
-            box-shadow: 0 0 10px var(--primary-color);
+            font-size: 1.15rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            margin-bottom: 25px;
         }
 
         .audio-btn {
-            background: linear-gradient(135deg, var(--primary-color), #b8860b);
+            background: #ffffff;
             color: #000;
             border: none;
-            padding: 12px 25px;
+            padding: 14px 30px;
             font-family: 'Cairo', sans-serif;
-            font-size: 1rem;
+            font-size: 1.05rem;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
             display: inline-flex;
             align-items: center;
@@ -125,7 +117,7 @@
 
         .audio-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
@@ -136,7 +128,7 @@
 </head>
 <body>
 
-    <audio id="eidTakbeer" src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Takbir_Eid.ogg" loop></audio>
+    <audio id="eidTakbeer" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop style="display:none;"></audio>
 
     <div class="gear gear-1" id="g1">⚙️</div>
     <div class="gear gear-2" id="g2">⚙️</div>
@@ -145,7 +137,7 @@
     <div class="card-container">
         <div class="icon-box" id="mainIcon">🌙</div>
         <h1 id="mainTitle">عيد مبارك</h1>
-        <div class="message-text" id="mainMsg">كل عام وأنتم بخير، أعاده الله عليكم باليمن والبركات والمسرات.</div>
+        <div class="message-text" id="mainMsg">كل عام وأنتم بخير، أعاده الله عليكم باليمن والبركات.</div>
         <div class="highlight-box" id="mainWish">ينعاد عليكم بالصحة والعافية</div>
         
         <button class="audio-btn" id="playBtn" onclick="toggleAudio()">
@@ -157,14 +149,15 @@
         const urlParams = new URLSearchParams(window.location.search);
         const userKey = urlParams.get('to');
 
+        // إعادة الألوان المبهجة والزاهية لكل شخصية حسب طلبك
         const themesData = {
             'father': {
                 title: "عيد مبارك أبو مصطاف",
                 icon: "🕋",
                 msg: "كل عام وأنت السند وتاج الراس يا غالي. ربي يحفظك النا وتظل منور دنيتنا بحكمتك وقوتك.",
                 wish: "بإذن الله السنة الجاية نشوفك على جبل عرفة ونفرح بيك 🕋✨",
-                bg: "linear-gradient(135deg, #111622, #080b11)",
-                color: "#ffca28",
+                bg: "linear-gradient(135deg, #2c3e50, #3498db)", // ألوان ميكانيكية معدنية زرقاء فخمة
+                color: "#f1c40f",
                 gears: true
             },
             'mother': {
@@ -172,8 +165,8 @@
                 icon: "🌸",
                 msg: "كل عام وأنتِ أجمل وردة بحديقتنا. ربي يخليج خيمة فوگ راسنا ولا يحرمنا من دعواتج النقيّة.",
                 wish: "يا رب السنة الجاية نطوف سوية بالحرم، وتكون أيامچ كلها خضار وسعادة 🌿🕋",
-                bg: "linear-gradient(135deg, #250926, #0d030e)",
-                color: "#ff6392",
+                bg: "linear-gradient(135deg, #ff75a0, #fbc2eb)", // ألوان الحديقة والورود الزاهية
+                color: "#ffffff",
                 gears: false
             },
             'brother': {
@@ -181,8 +174,8 @@
                 icon: "🦷",
                 msg: "كل عام وأنت أحسن طبيب أسنان بالدنيا وأقوى لاعب. ان شاء الله هالسنة تحقق كل طموحاتك الكبيرة.",
                 wish: "يوم اللي نباركلك بفتح العيادة الخاصة مالتك ونفرح بيك! ⚽🏆",
-                bg: "linear-gradient(135deg, #061626, #02080f)",
-                color: "#00e5ff",
+                bg: "linear-gradient(135deg, #1e3c72, #2a5298)", // ألوان رياضية وطبية حيوية
+                color: "#00ffff",
                 gears: false
             },
             'sister': {
@@ -190,8 +183,8 @@
                 icon: "🎀",
                 msg: "كل عام وأنتِ أحلى وألطف أميرة ديزني عدنا. عيدچ كله وناسة وفرحة وحلويات وشغلات مبهجة.",
                 wish: "ان شاء الله تظلين دائماً متميزة ويا ألعابچ Kuromi و Hello Kitty الملونة 🍭✨",
-                bg: "linear-gradient(135deg, #0f0f10, #050505)",
-                color: "#ec407a",
+                bg: "linear-gradient(135deg, #da22ff, #9733ee)", // ألوان كرتونية زاهية ومبهجة (بنفسجي ووردي نيون)
+                color: "#ffffff",
                 gears: false
             }
         };
@@ -211,14 +204,16 @@
             }
         }
 
-        // إعدادات الصوت والتفاعل
+        // إعدادات ومحرك الصوت والتأثيرات سمعية وبصرية
         let isPlaying = false;
         let audioCtx = null;
         const audio = document.getElementById('eidTakbeer');
         const playBtn = document.getElementById('playBtn');
 
+        // رابط بديل لتكبيرات العيد بصيغة MP3 متوافقة 100% مع التشغيل المحلي والإنترنت
+        audio.src = "https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptrackid=274151"; 
+
         function toggleAudio() {
-            // تهيئة محرك الصوت عند أول ضغطة زبون
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
@@ -227,9 +222,11 @@
                 audio.play().then(() => {
                     playBtn.innerHTML = "<span>إيقاف الاحتفال 🔇</span>";
                     isPlaying = true;
-                    // تفعيل إطلاق فوري للألعاب النارية مع تشغيل الصوت
                     for(let i=0; i<4; i++) fireworks.push(new Firework());
-                }).catch(e => console.log(e));
+                }).catch(e => {
+                    alert("اضغط مرة أخرى لتشغيل الاحتفال والمؤثرات!");
+                    console.log(e);
+                });
             } else {
                 audio.pause();
                 playBtn.innerHTML = "<span>ابدأ الاحتفال بالعيد 🎧✨</span>";
@@ -237,41 +234,31 @@
             }
         }
 
-        // دالة مخصصة لتوليد صوت انفجار خفيف بالذكاء الصوتي البرمجي وبدون ملفات خارحية
         function playExplosionSound() {
             if (!audioCtx || !isPlaying) return;
-
             try {
-                // تكوين نويز أو ضوضاء بيضاء لمحاكاة الانفجار البصري الفعلي
-                const bufferSize = audioCtx.sampleRate * 0.4; // مدة الصوت أقل من نصف ثانية
+                const bufferSize = audioCtx.sampleRate * 0.4;
                 const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
                 const data = buffer.getChannelData(0);
                 for (let i = 0; i < bufferSize; i++) {
                     data[i] = Math.random() * 2 - 1;
                 }
-
                 const noise = audioCtx.createBufferSource();
                 noise.buffer = buffer;
-
-                // فلتر الصوت لجعله عميقاً وخفيفاً (Lowpass Filter) وليس حاداً ومزعجاً
                 const filter = audioCtx.createBiquadFilter();
                 filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(200, audioCtx.currentTime); // تردد منخفض لصوت دوي خفيف
-
-                // التحكم بمستوى الصوت ليكون خفيفاً جداً بالخلفية
+                filter.frequency.setValueAtTime(250, audioCtx.currentTime);
                 const gain = audioCtx.createGain();
-                gain.gain.setValueAtTime(0.04, audioCtx.currentTime); // 0.04 تعني هادئ جداً وتفاعلي
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
-
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.38);
                 noise.connect(filter);
                 filter.connect(gain);
                 gain.connect(audioCtx.destination);
-
                 noise.start();
             } catch(e) { console.log(e); }
         }
 
-        // --- محرك الألعاب النارية البصري المحسن (Canvas) ---
+        // --- محرك الألعاب النارية ---
         const canvas = document.getElementById('fireworksCanvas');
         const ctx = canvas.getContext('2d');
         let width = canvas.width = window.innerWidth;
@@ -286,9 +273,9 @@
             constructor(x, y, color) {
                 this.x = x; this.y = y; this.color = color;
                 this.radius = Math.random() * 2.5 + 1;
-                this.velocity = { x: (Math.random() - 0.5) * 6, y: (Math.random() - 0.5) * 6 };
+                this.velocity = { x: (Math.random() - 0.5) * 7, y: (Math.random() - 0.5) * 7 };
                 this.alpha = 1;
-                this.decay = Math.random() * 0.015 + 0.015;
+                this.decay = Math.random() * 0.015 + 0.012;
             }
             draw() {
                 ctx.save(); ctx.globalAlpha = this.alpha; ctx.beginPath();
@@ -302,17 +289,14 @@
             constructor() {
                 this.x = Math.random() * width; this.y = height;
                 this.targetY = Math.random() * (height * 0.5) + 50;
-                this.color = `hsl(${Math.random() * 360}, 100%, 65%)`;
+                this.color = `hsl(${Math.random() * 360}, 100%, 70%)`;
                 this.velocity = Math.random() * 4 + 7;
                 this.particles = []; this.exploded = false;
             }
             update() {
                 if (!this.exploded) {
                     this.y -= this.velocity;
-                    if (this.y <= this.targetY) { 
-                        this.exploded = true; 
-                        this.explode(); 
-                    }
+                    if (this.y <= this.targetY) { this.exploded = true; this.explode(); }
                 } else {
                     for (let i = this.particles.length - 1; i >= 0; i--) {
                         this.particles[i].update();
@@ -321,9 +305,8 @@
                 }
             }
             explode() { 
-                // إطلاق صوت انفجار خفيف بالتزامن مع الانفجار البصري الشاشي
                 playExplosionSound();
-                for (let i = 0; i < 60; i++) this.particles.push(new Particle(this.x, this.y, this.color)); 
+                for (let i = 0; i < 65; i++) this.particles.push(new Particle(this.x, this.y, this.color)); 
             }
             draw() {
                 if (!this.exploded) {
@@ -335,9 +318,9 @@
 
         const fireworks = [];
         function animate() {
-            ctx.fillStyle = 'rgba(10, 15, 29, 0.2)'; ctx.fillRect(0, 0, width, height);
+            // مسح الشاشة مع إبقاء ألوان الخلفية الحيوية ظاهرة وواضحة
+            ctx.clearRect(0, 0, width, height);
             
-            // لا تطلق ألعاب نارية بشكل عشوائي مستمر إلا إذا ضغط المستخدم على الزر وبدأ الاحتفال
             if (isPlaying && Math.random() < 0.04 && fireworks.length < 5) {
                 fireworks.push(new Firework());
             }
