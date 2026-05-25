@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تهنئة العيد الغامرة المستقرة 100%</title>
+    <title>تهنئة العيد الغامرة المستقرة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,192 +12,68 @@
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: var(--bg-gradient);
-            font-family: 'Cairo', sans-serif;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1500px;
-            transition: background 0.8s ease;
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background: var(--bg-gradient);
+            font-family: 'Cairo', sans-serif; color: #fff;
+            display: flex; justify-content: center; align-items: center;
+            perspective: 1500px; transition: background 0.8s ease;
         }
 
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
-        /* صورة الكعبة الآن مدمجة كـ SVG برمجياً فائق الدقة والخفة لتعمل فوراً دون روابط خارجية */
+        /* الكود يقرأ الصورة المحلية مباشرة الحقيقية مالتنا */
         #haramBg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080' viewBox='0 0 1920 1080'><rect width='1920' height='1080' fill='%23111827'/><g transform='translate(960, 560)'><rect x='-180' y='-180' width='360' height='360' fill='%231f2937' stroke='%23d4af37' stroke-width='4'/><rect x='-180' y='-60' width='360' height='30' fill='%23d4af37' opacity='0.8'/><line x1='-180' y1='-55' x2='180' y2='-55' stroke='%23111' stroke-width='2'/><line x1='-180' y1='-35' x2='180' y2='-35' stroke='%23111' stroke-width='2'/><rect x='-40' y='30' width='80' height='150' fill='%23f59e0b' stroke='%23d4af37' stroke-width='3'/><circle cx='30' cy='105' r='4' fill='%23111'/></g><path d='M0 740 Q 480 700, 960 740 T 1920 740 L 1920 1080 L 0 1080 Z' fill='%23374151' opacity='0.5'/><circle cx='300' cy='200' r='120' fill='%23fff' opacity='0.03'/><circle cx='1500' cy='300' r='180' fill='%23fff' opacity='0.02'/></svg>");
-            background-size: cover;
-            background-position: center;
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 1.2s ease;
-            filter: brightness(0.6) contrast(1.1);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('kaaba.jpg') no-repeat center center;
+            background-size: cover; z-index: 0; opacity: 0;
+            transition: opacity 1.2s ease; filter: brightness(0.5);
         }
 
         .card-container {
-            width: 90%;
-            max-width: 440px;
+            width: 90%; max-width: 420px;
             background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 30px 25px;
-            text-align: center;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px; padding: 35px 25px; text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-            z-index: 2;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4); z-index: 2;
             transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .card-container.immersed {
-            transform: translateZ(-450px) translateY(20px) scale(0.7);
-            background: rgba(0, 0, 0, 0.75);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .icon-box {
-            font-size: 65px;
-            margin-bottom: 5px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        h1 {
-            font-family: 'Reem Kufi', sans-serif;
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            margin: 10px 0;
-        }
-
-        .message-text {
-            font-size: 1.15rem;
-            line-height: 1.7;
-            margin: 15px 0;
-        }
-
-        .highlight-box {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            border-radius: 12px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .audio-btn {
-            background: #ffffff;
-            color: #000;
-            border: none;
-            padding: 12px 25px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .audio-btn:hover { transform: scale(1.05); }
-
-        .controls-wrapper {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .action-btn {
-            background: none;
-            border: none;
-            color: var(--primary-color);
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.95rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: underline;
-        }
-
-        #exitBtn {
-            display: none;
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            background: #ffffff;
-            color: #000;
-            border: none;
-            padding: 10px 22px;
-            font-family: 'Cairo', sans-serif;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            z-index: 10;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-        }
-
-        .eidiya-card-details {
-            display: none;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 12px;
-            margin-top: 10px;
-            width: 100%;
             box-sizing: border-box;
         }
 
-        .card-number-box {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 8px;
-            border-radius: 6px;
-            font-family: monospace;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-            margin: 8px 0;
-            color: #00ffcc;
+        .card-container.immersed {
+            transform: translateZ(-400px) translateY(10px) scale(0.75);
+            background: rgba(0, 0, 0, 0.8); border-color: rgba(255, 255, 255, 0.1);
         }
 
-        .copy-btn {
-            background: var(--primary-color);
-            color: #000;
-            border: none;
-            padding: 5px 12px;
-            font-family: 'Cairo', sans-serif;
-            font-weight: bold;
-            font-size: 0.8rem;
-            border-radius: 4px;
-            cursor: pointer;
+        .icon-box { font-size: 60px; margin-bottom: 5px; animation: float 3s ease-in-out infinite; }
+        h1 { font-family: 'Reem Kufi', sans-serif; color: var(--primary-color); font-size: 2.2rem; margin: 10px 0; }
+        .message-text { font-size: 1.15rem; line-height: 1.7; margin: 15px 0; }
+        .highlight-box { background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; font-weight: bold; margin-bottom: 20px; }
+        
+        .audio-btn {
+            background: #ffffff; color: #000; border: none; padding: 12px 25px;
+            font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: bold;
+            border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;
         }
 
+        .controls-wrapper { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+        .action-btn { background: none; border: none; color: var(--primary-color); font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: underline; }
+        
+        #exitBtn {
+            display: none; position: absolute; top: 25px; right: 25px;
+            background: #ffffff; color: #000; border: none; padding: 10px 22px;
+            font-family: 'Cairo', sans-serif; font-weight: bold; border-radius: 30px;
+            cursor: pointer; z-index: 10; box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+        }
+
+        .eidiya-card-details { display: none; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px; padding: 15px; margin-top: 15px; width: 100%; box-sizing: border-box; }
+        .card-number-box { background: rgba(255, 255, 255, 0.15); padding: 8px; border-radius: 6px; font-family: monospace; font-size: 1.2rem; letter-spacing: 2px; margin: 8px 0; color: #00ffcc; }
+        .copy-btn { background: var(--primary-color); color: #000; border: none; padding: 6px 15px; font-family: 'Cairo', sans-serif; font-weight: bold; font-size: 0.85rem; border-radius: 4px; cursor: pointer; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
     </style>
 </head>
 <body>
-
     <audio id="eidTakbeer" src="takbeer.mp3" loop style="display:none;"></audio>
 
     <button id="exitBtn" onclick="stopImmersion()">الرجوع للوضع الطبيعي ↩️</button>
@@ -217,16 +93,17 @@
 
         <div class="controls-wrapper">
             <button class="action-btn" id="immerseToggle" onclick="startImmersion()">
-                <span>اضغط لتدخل الحرم المكي 🕋✨</span>
+                <span>اضغط 🕋✨</span>
             </button>
             <button class="action-btn" onclick="toggleEidiyaBox()">
-                <span>دز العيدية أونلاين? 💸😉</span>
+                <span>اذا عاجبك
+                    <br> تكدر تعايدني اونلاين💸😉</span>
             </button>
         </div>
 
         <div class="eidiya-card-details" id="eidiyaBox">
             <p style="margin: 0; font-size: 0.85rem; color: #ccc;">يمكنك نسخ رقم الحساب لتحويل العيدية مباشرة:</p>
-            <div class="card-number-box" id="cardNumber">1234567890</div>
+            <div class="card-number-box" id="cardNumber">9133900168</div>
             <button class="copy-btn" onclick="copyCardNumber()">نسخ رقم الحساب 📋</button>
             <p id="copyStatus" style="margin: 5px 0 0 0; font-size: 0.8rem; color: #00ffcc; display: none;">تم النسخ بنجاح! كثر الله خيرك تسلم 🤍</p>
         </div>
@@ -266,7 +143,7 @@
                 isPlaying = true;
                 playBtn.innerHTML = "<span>إيقاف الاحتفال 🔇</span>";
                 for(let i=0; i<6; i++) fireworks.push(new Firework());
-                audio.play().catch(e => console.log("Audio file bypassed local sandbox block. Continuing interface rendering."));
+                audio.play().catch(e => console.log("Audio skipped local sandbox block."));
             } else {
                 audio.pause();
                 playBtn.innerHTML = "<span>ابدأ الاحتفال بالعيد 🎧✨</span>";
