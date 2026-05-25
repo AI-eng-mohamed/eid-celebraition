@@ -36,7 +36,6 @@
             pointer-events: none;
         }
 
-        /* التروس لثيم الوالد */
         .gear {
             position: absolute;
             font-size: 140px;
@@ -128,7 +127,7 @@
 </head>
 <body>
 
-    <audio id="eidTakbeer" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop style="display:none;"></audio>
+    <audio id="eidTakbeer" src="https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptrackid=274151" loop style="display:none;"></audio>
 
     <div class="gear gear-1" id="g1">⚙️</div>
     <div class="gear gear-2" id="g2">⚙️</div>
@@ -149,14 +148,13 @@
         const urlParams = new URLSearchParams(window.location.search);
         const userKey = urlParams.get('to');
 
-        // إعادة الألوان المبهجة والزاهية لكل شخصية حسب طلبك
         const themesData = {
             'father': {
                 title: "عيد مبارك أبو مصطاف",
                 icon: "🕋",
                 msg: "كل عام وأنت السند وتاج الراس يا غالي. ربي يحفظك النا وتظل منور دنيتنا بحكمتك وقوتك.",
                 wish: "بإذن الله السنة الجاية نشوفك على جبل عرفة ونفرح بيك 🕋✨",
-                bg: "linear-gradient(135deg, #2c3e50, #3498db)", // ألوان ميكانيكية معدنية زرقاء فخمة
+                bg: "linear-gradient(135deg, #2c3e50, #3498db)", 
                 color: "#f1c40f",
                 gears: true
             },
@@ -165,7 +163,7 @@
                 icon: "🌸",
                 msg: "كل عام وأنتِ أجمل وردة بحديقتنا. ربي يخليج خيمة فوگ راسنا ولا يحرمنا من دعواتج النقيّة.",
                 wish: "يا رب السنة الجاية نطوف سوية بالحرم، وتكون أيامچ كلها خضار وسعادة 🌿🕋",
-                bg: "linear-gradient(135deg, #ff75a0, #fbc2eb)", // ألوان الحديقة والورود الزاهية
+                bg: "linear-gradient(135deg, #ff75a0, #fbc2eb)", 
                 color: "#ffffff",
                 gears: false
             },
@@ -174,7 +172,7 @@
                 icon: "🦷",
                 msg: "كل عام وأنت أحسن طبيب أسنان بالدنيا وأقوى لاعب. ان شاء الله هالسنة تحقق كل طموحاتك الكبيرة.",
                 wish: "يوم اللي نباركلك بفتح العيادة الخاصة مالتك ونفرح بيك! ⚽🏆",
-                bg: "linear-gradient(135deg, #1e3c72, #2a5298)", // ألوان رياضية وطبية حيوية
+                bg: "linear-gradient(135deg, #1e3c72, #2a5298)", 
                 color: "#00ffff",
                 gears: false
             },
@@ -183,7 +181,7 @@
                 icon: "🎀",
                 msg: "كل عام وأنتِ أحلى وألطف أميرة ديزني عدنا. عيدچ كله وناسة وفرحة وحلويات وشغلات مبهجة.",
                 wish: "ان شاء الله تظلين دائماً متميزة ويا ألعابچ Kuromi و Hello Kitty الملونة 🍭✨",
-                bg: "linear-gradient(135deg, #da22ff, #9733ee)", // ألوان كرتونية زاهية ومبهجة (بنفسجي ووردي نيون)
+                bg: "linear-gradient(135deg, #da22ff, #9733ee)", 
                 color: "#ffffff",
                 gears: false
             }
@@ -204,29 +202,27 @@
             }
         }
 
-        // إعدادات ومحرك الصوت والتأثيرات سمعية وبصرية
         let isPlaying = false;
         let audioCtx = null;
         const audio = document.getElementById('eidTakbeer');
         const playBtn = document.getElementById('playBtn');
 
-        // رابط بديل لتكبيرات العيد بصيغة MP3 متوافقة 100% مع التشغيل المحلي والإنترنت
-        audio.src = "https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptrackid=274151"; 
-
         function toggleAudio() {
+            // حل مشكلة التفعيل المباشر للـ AudioContext في المتصفحات
             if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
             }
 
             if (!isPlaying) {
                 audio.play().then(() => {
                     playBtn.innerHTML = "<span>إيقاف الاحتفال 🔇</span>";
                     isPlaying = true;
-                    for(let i=0; i<4; i++) fireworks.push(new Firework());
-                }).catch(e => {
-                    alert("اضغط مرة أخرى لتشغيل الاحتفال والمؤثرات!");
-                    console.log(e);
-                });
+                    // تفعيل فوري للألعاب النارية مع الضغطة الأولية
+                    for(let i=0; i<5; i++) fireworks.push(new Firework());
+                }).catch(e => console.log("خطأ في تشغيل ملف الصوت الخارجي:", e));
             } else {
                 audio.pause();
                 playBtn.innerHTML = "<span>ابدأ الاحتفال بالعيد 🎧✨</span>";
@@ -237,7 +233,7 @@
         function playExplosionSound() {
             if (!audioCtx || !isPlaying) return;
             try {
-                const bufferSize = audioCtx.sampleRate * 0.4;
+                const bufferSize = audioCtx.sampleRate * 0.3;
                 const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
                 const data = buffer.getChannelData(0);
                 for (let i = 0; i < bufferSize; i++) {
@@ -247,10 +243,10 @@
                 noise.buffer = buffer;
                 const filter = audioCtx.createBiquadFilter();
                 filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(250, audioCtx.currentTime);
+                filter.frequency.setValueAtTime(200, audioCtx.currentTime);
                 const gain = audioCtx.createGain();
-                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.38);
+                gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.28);
                 noise.connect(filter);
                 filter.connect(gain);
                 gain.connect(audioCtx.destination);
@@ -318,7 +314,6 @@
 
         const fireworks = [];
         function animate() {
-            // مسح الشاشة مع إبقاء ألوان الخلفية الحيوية ظاهرة وواضحة
             ctx.clearRect(0, 0, width, height);
             
             if (isPlaying && Math.random() < 0.04 && fireworks.length < 5) {
