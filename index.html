@@ -50,12 +50,20 @@
         .message-text { font-size: 1.15rem; line-height: 1.7; margin: 15px 0; }
         .highlight-box { background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; font-weight: bold; margin-bottom: 20px; }
         
-        .audio-btn {
-            background: #ffffff; color: #000; border: none; padding: 12px 25px;
-            font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: bold;
-            border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;
+        /* لتنسيق أزرار الصوت لتكون متناسقة بداخل الكارد */
+        .audio-btns-container {
+            display: flex; flex-direction: column; gap: 10px; width: 100%; align-items: center;
         }
+
+        .audio-btn {
+            width: 85%; background: #ffffff; color: #000; border: none; padding: 12px 20px;
+            font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: bold;
+            border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .audio-btn:hover { transform: scale(1.03); }
+
+        .enjoy-btn { background: linear-gradient(45deg, #f80759, #bc4e9c); color: #fff; }
 
         .controls-wrapper { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
         .action-btn { background: none; border: none; color: var(--primary-color); font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: underline; }
@@ -75,6 +83,7 @@
 </head>
 <body>
     <audio id="eidTakbeer" src="takbeer.mp3" loop style="display:none;"></audio>
+    <audio id="eidLetsEnjoy" src="lets_enjoy.mp3" loop style="display:none;"></audio>
 
     <button id="exitBtn" onclick="stopImmersion()">الرجوع للوضع الطبيعي ↩️</button>
 
@@ -87,9 +96,14 @@
         <div class="message-text" id="mainMsg">كل عام وأنتم بخير، أعاده الله عليكم باليمن والبركات.</div>
         <div class="highlight-box" id="mainWish">ينعاد عليكم بالصحة والعافية</div>
         
-        <button class="audio-btn" id="playBtn" onclick="toggleAudio()">
-            <span>ابدأ الاحتفال بالعيد 🎧✨</span>
-        </button>
+        <div class="audio-btns-container">
+            <button class="audio-btn" id="playBtn" onclick="toggleAudio('islamic')">
+                <span>ابدأ الاحتفال بالعيد 🎧✨</span>
+            </button>
+            <button class="audio-btn enjoy-btn" id="enjoyBtn" onclick="toggleAudio('non-islamic')">
+                <span>ابدأ العيد المو إسلامي 🕺🔥</span>
+            </button>
+        </div>
 
         <div class="controls-wrapper">
             <button class="action-btn" id="immerseToggle" onclick="startImmersion()">
@@ -108,17 +122,16 @@
             <p id="copyStatus" style="margin: 5px 0 0 0; font-size: 0.8rem; color: #00ffcc; display: none;">تم النسخ بنجاح! كثر الله خيرك تسلم 🤍</p>
         </div>
     </div>
-
-   <script>
+    <script>
         const urlParams = new URLSearchParams(window.location.search);
         const userKey = urlParams.get('to');
 
-        // السورس الأصلي للثيمات اللي أنت عدلتها (الكود يقرأها ديناميكياً ويحافظ عليها)
+        // نصوصك وثيماتك الأصلية مالت العائلة بدون أي تغيير بحرف واحد
         const themesData = {
-            'father': { title: "عيد مبارك أبو مصطاف", icon: "🕋", msg: "كل عام وأنت السند وتاج الراس يا غالي. ربي يحفظك النا وتظل منور دنيتنا بحكمتك وقوتك.", wish: "بإذن الله السنة الجاية نشوفك على جبل عرفة ونفرح بيك 🕋✨", bg: "linear-gradient(135deg, #2c3e50, #3498db)", color: "#f1c40f" },
-            'mother': { title: "عيد مبروك يا ست الحبايب", icon: "🌸", msg: "كل عام وأنتِ أجمل وردة بحديقتنا. ربي يخليج خيمة فوگ راسنا ولا يحرمنا من دعواتج النقيّة.", wish: "يا رب السنة الجاية نطوف سوية بالحرم، وتكون أيامچ كلها خضار وسعادة 🌿🕋", bg: "linear-gradient(135deg, #ff75a0, #fbc2eb)", color: "#ffffff" },
-            'brother': { title: "عيد سعيد دكتورنا", icon: "🦷", msg: "كل عام وأنت أحسن طبيب أسنان بالدنيا وأقوى لاعب. ان شاء الله هالسنة تحقق كل طموحاتك الكبيرة.", wish: "يوم اللي نباركلك بفتح العيادة الخاصة مالتك ونفرح بيك! ⚽🏆", bg: "linear-gradient(135deg, #1e3c72, #2a5298)", color: "#00ffff" },
-            'sister': { title: "عيدچ مبارك كوكو", icon: "🎀", msg: "كل عام وأنتِ أحلى وألطف أميرة ديزني عدنا. عيدچ كله وناسة وفرحة وحلويات وشغلات مبهجة.", wish: "ان شاء الله تظلين دائماً متميزة ويا ألعابچ Kuromi و Hello Kitty الملونة 🍭✨", bg: "linear-gradient(135deg, #da22ff, #9733ee)", color: "#ffffff" }
+            'father': { title: "عيد مبارك أبو مصطاف", icon: "🕋", msg: "كل عام وأنت السند وتاج الراس يا غالي. ربي يحفظك وتدوم خيمة فوك روسنا .", wish: "بإذن الله السنة الجاية نشوفك على جبل عرفة ونفرح بيك 🕋✨", bg: "linear-gradient(135deg, #2c3e50, #3498db)", color: "#f1c40f" },
+            'mother': { title: "عيد مبارك يا ست الحبايب", icon: "🌸", msg: "كل عام وأنتِ أجمل وردة بحديقتنا. ربي يخليج خيمة فوگ راسنا ولا يحرمنا من دعواتج النقيّة.", wish: "يا رب السنة الجاية نطوف سوية بالحرم، وتكون أيامچ كلها خضار وسعادة 🌿🕋", bg: "linear-gradient(135deg, #ff75a0, #fbc2eb)", color: "#ffffff" },
+            'brother': { title: "عيد سعيد دكتورنا", icon: "🦷", msg: "كل عام وأنت أحسن طبيب أسنان بالدنيا . ان شاء الله هالسنة تحقق كل طموحاتك .", wish: "يوم اللي نباركلك بفتح العيادة الخاصة مالتك ونفرح بيك! ⚽🏆", bg: "linear-gradient(135deg, #1e3c72, #2a5298)", color: "#00ffff" },
+            'sister': { title: "عيدچ مبارك الحبب", icon: "🎀", msg: "كل عام وأنتِ أحلى وألطف أميرة عدنا. عيدچ كله  فرحة وشغلات مبهجة.", wish:"ان شاء الله تحققين كل امنياتج بس الي من ثوبنة طبعا", bg: "linear-gradient(135deg, #da22ff, #9733ee)", color: "#ffffff" }
         };
 
         let currentBg = "linear-gradient(135deg, #111111, #2c3e50)";
@@ -134,54 +147,55 @@
 
         document.body.style.background = currentBg;
 
-        let activeMode = null;
+        let activeMode = null; // يحفظ الوضع الحالي: 'islamic' أو 'non-islamic' أو null
         let audioCtx = null;
+        
         const audioIslamic = document.getElementById('eidTakbeer');
         const audioNonIslamic = document.getElementById('eidLetsEnjoy');
-        const btnIslamic = document.getElementById('playIslamicBtn');
-        const btnNonIslamic = document.getElementById('playNonIslamicBtn');
+        const playBtn = document.getElementById('playBtn');
+        const enjoyBtn = document.getElementById('enjoyBtn');
 
-        // تسريع المسارات برمجياً داخل المتصفح مباشرة
-        audioIslamic.playbackRate = 1.15;      
-        audioNonIslamic.playbackRate = 1.30;   
+        // تسريع الصوت داخل المتصفح مباشرة
+        audioIslamic.playbackRate = 1.15;
+        audioNonIslamic.playbackRate = 1.30;
 
         function toggleAudio(mode) {
             if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
             if (audioCtx.state === 'suspended') { audioCtx.resume(); }
 
+            // إذا ضغط نفس الزر وهو شغال، يطفي كل شي
             if (activeMode === mode) {
                 stopAllAudio();
                 return;
             }
 
-            stopAllAudio();
+            stopAllAudio(); // تصفية الصوت الشغال قبل الانتقال للثاني
             activeMode = mode;
 
             if (mode === 'islamic') {
-                // تفعيل الأزرار بناءً على الـ id الجديد المضاف بجروب الأزرار
-                if(btnIslamic) btnIslamic.innerHTML = "<span>إيقاف الاحتفال 🔇</span>";
-                audioIslamic.play().catch(e => console.log("Audio bypass"));
+                playBtn.innerHTML = "<span>إيقاف الاحتفال 🔇</span>";
+                audioIslamic.play().catch(e => console.log("Audio skipped local sandbox block."));
                 for(let i=0; i<6; i++) fireworks.push(new Firework());
             } else if (mode === 'non-islamic') {
-                // إلغاء تأثير وضع الكعبة فوراً لو جان شغال عشان ترجع ألوان الحفلة والمو إسلامي
+                // إلغاء وضع الغمر (الكعبة) فوراً إذا كان شغال حتى ترجع الألوان مالت الحفلة
                 document.getElementById('card').classList.remove('immersed');
                 document.getElementById('haramBg').style.opacity = '0';
                 document.getElementById('exitBtn').style.display = 'none';
                 document.getElementById('immerseToggle').style.display = 'inline-flex';
 
-                if(btnNonIslamic) btnNonIslamic.innerHTML = "<span>إيقاف إنجوي 🔇🕺</span>";
-                document.body.style.background = "linear-gradient(135deg, #f80759, #bc4e9c, #111111)"; 
-                audioNonIslamic.play().catch(e => console.log("Audio bypass"));
-                for(let i=0; i<25; i++) fireworks.push(new Firework());
+                enjoyBtn.innerHTML = "<span>إيقاف إنجوي 🔇🕺</span>";
+                document.body.style.background = "linear-gradient(135deg, #f80759, #bc4e9c, #111111)";
+                audioNonIslamic.play().catch(e => console.log("Audio skipped."));
+                for(let i=0; i<25; i++) fireworks.push(new Firework()); // ألعاب نارية مكثفة للحفلة
             }
         }
 
         function stopAllAudio() {
             audioIslamic.pause();
             audioNonIslamic.pause();
-            if(btnIslamic) btnIslamic.innerHTML = "<span>ابدأ الاحتفال بالعيد 🎧✨</span>";
-            if(btnNonIslamic) btnNonIslamic.innerHTML = "<span>ابدأ العيد المو إسلامي 🕺🔥</span>";
-            document.body.style.background = currentBg; 
+            playBtn.innerHTML = "<span>ابدأ الاحتفال بالعيد 🎧✨</span>";
+            enjoyBtn.innerHTML = "<span>ابدأ العيد المو إسلامي 🕺🔥</span>";
+            document.body.style.background = currentBg; // إرجاع خلفية الثيم الأصلية
             activeMode = null;
         }
 
@@ -224,16 +238,19 @@
                 for (let i = 0; i < bufferSize; i++) { data[i] = Math.random() * 2 - 1; }
                 const noise = audioCtx.createBufferSource(); noise.buffer = buffer;
                 const filter = audioCtx.createBiquadFilter(); filter.type = 'lowpass'; 
+                
+                // نغمة الانفجار تكون أضخم بالوضع الإسلامي وبمستويات مختلفة للمو إسلامي
                 filter.frequency.setValueAtTime(activeMode === 'non-islamic' ? 350 : 200, audioCtx.currentTime);
                 const gain = audioCtx.createGain(); 
                 gain.gain.setValueAtTime(activeMode === 'non-islamic' ? 0.04 : 0.02, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.22);
+                
                 noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
                 noise.start();
             } catch(e){}
         }
 
-        // --- محرك الألعاب النارية الشفاف والمستقر ---
+        // --- محرك الألعاب النارية المتكامل والشغال الشفاف ---
         const canvas = document.getElementById('fireworksCanvas');
         const ctx = canvas.getContext('2d');
         let width = canvas.width = window.innerWidth;
