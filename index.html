@@ -10,28 +10,33 @@
             --primary-color: #d4af37;
             --bg-gradient: linear-gradient(135deg, #111111, #2c3e50);
         }
-   body, html {
+ body, html {
     margin: 0; padding: 0; width: 100%;
-    min-height: 100vh; /* يأخذ كامل ارتفاع الشاشة المتوفر */
-    overflow-x: hidden; /* يمنع الروحة والرجعة بالعرض نهائياً */
-    overflow-y: auto; /* يسمح بالسكرول العمودي إذا الكارد طويل */
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
     background: var(--bg-gradient);
     font-family: 'Cairo', sans-serif; color: #fff;
-    display: flex; justify-content: center; align-items: center; /* سنترة كاملة باللابتوب */
-    perspective: 1500px; transition: background 0.8s ease;
+    display: flex; justify-content: center; align-items: center;
+    /* 👈 تم إزالة الـ perspective من هنا لأنها تسبب الشطوح مع الـ rtl في بعض المتصفحات */
     box-sizing: border-box;
+    transition: background 0.8s ease;
 }
 
-/* حل مخصص للموبايل فقط بدون ما يضرب اللابتوب */
+/* تعديل تأثير الانغماس حتى يكون آمن وميشطح الكارد صفح */
+.card-container.immersed {
+    /* 👈 استبدلنا الـ translateZ بـ scale عادي ليعطي نفس الإيحاء بالعمق وبأمان 100% */
+    transform: translateY(10px) scale(0.78);
+    background: rgba(0, 0, 0, 0.8); border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* حل مخصص وسلس للموبايل */
 @media screen and (max-width: 480px) {
     body, html {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start; /* يبدأ من فوق بالموبايل حتى يسمح بالسكرول */
-        align-items: center; /* يضمن بقاء الكارد بالسنتر وما يشطح صفح */
-        padding: 40px 0; /* مسافة أمان فوق وتحت حتى ما يلزق بالحافة */
+        align-items: flex-start;
+        padding: 40px 0;
     }
-}
+
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
         /* الكود يقرأ الصورة المحلية مباشرة الحقيقية مالتنا */
